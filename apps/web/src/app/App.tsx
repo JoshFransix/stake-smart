@@ -8,6 +8,7 @@ import {
   ScenarioExplorer,
   ProbabilityAnalyzer,
   ScrollToTop,
+  LiveMatches,
 } from "@stake-smart/ui";
 import { analyzeBets, calculateCombinedProbability, formatCurrency } from "@stake-smart/betting";
 import { AnimatePresence, motion } from "framer-motion";
@@ -40,14 +41,6 @@ export default function App() {
     }
   };
 
-  const sampleBets = [
-    { match: "Arsenal vs Chelsea", odds: 2.5 },
-    { match: "Man City vs Liverpool", odds: 3.2 },
-    { match: "Barcelona vs Real Madrid", odds: 1.8 },
-    { match: "Bayern vs Dortmund", odds: 2.1 },
-    { match: "PSG vs Lyon", odds: 1.6 },
-  ];
-
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       <ScrollToTop />
@@ -78,7 +71,6 @@ export default function App() {
         </AnimatePresence>
 
         <div className="grid lg:grid-cols-3 gap-6 pb-24 lg:pb-8">
-          {/* Main content - Left column */}
           <div className="lg:col-span-2 space-y-6">
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -98,26 +90,7 @@ export default function App() {
               <BetList bets={bets} onToggle={toggleBet} onRemove={removeBet} />
             </div>
 
-            <div>
-              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Add Sample Bet
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {sampleBets.map((bet, i) => (
-                  <motion.button
-                    key={i}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleAddBet(bet.match, bet.odds)}
-                    className="px-3 py-2 text-sm bg-blue-600 text-white rounded 
-                             hover:bg-blue-700 active:bg-blue-800 
-                             transition-colors duration-150 hover:shadow-md"
-                  >
-                    {bet.match} ({bet.odds})
-                  </motion.button>
-                ))}
-              </div>
-            </div>
+            <LiveMatches onAddBet={handleAddBet} />
 
             <ProbabilityAnalyzer 
               probabilities={probabilities}
@@ -130,7 +103,6 @@ export default function App() {
             />
           </div>
 
-          {/* Sidebar - Sticky on desktop, fixed bottom on mobile */}
           <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-8 space-y-6">
               <StakeInput value={stake} onChange={setStake} />
@@ -138,19 +110,15 @@ export default function App() {
             </div>
           </div>
 
-          {/* Mobile sticky bottom summary - Collapsible with frosted glass */}
           <motion.div 
             className="lg:hidden fixed bottom-0 left-0 right-0 z-40"
             initial={false}
           >
-            {/* Frosted glass backdrop */}
             <div className="absolute inset-0 bg-white/80 dark:bg-gray-900/80 
                           backdrop-blur-lg border-t-2 border-gray-200 dark:border-gray-700 
                           shadow-2xl" />
             
-            {/* Content */}
             <div className="relative w-full">
-              {/* Expand/Collapse Button - Integrated tab */}
               <motion.button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="absolute -top-8 left-1/2 -translate-x-1/2 
@@ -182,7 +150,6 @@ export default function App() {
                 </motion.svg>
               </motion.button>
 
-              {/* Collapsed View - Just shows payout */}
               <AnimatePresence>
                 {!isExpanded && (
                   <motion.div
@@ -203,7 +170,6 @@ export default function App() {
                 )}
               </AnimatePresence>
 
-              {/* Expanded View - Full summary */}
               <AnimatePresence>
                 {isExpanded && (
                   <motion.div

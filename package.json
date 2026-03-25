@@ -13,23 +13,24 @@
         "libs/*"
     ],
     "dependencies": {
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
+        "axios": "^1.13.6",
         "clsx": "^2.1.1",
-        "framer-motion": "^11.0.0"
+        "framer-motion": "^11.0.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
     },
     "devDependencies": {
-        "@nx/vite": "^22.0.0",
-        "@nx/react": "^22.0.0",
         "@nx/js": "^22.0.0",
-        "@vitejs/plugin-react": "^4.3.1",
-        "vite": "^5.4.8",
-        "typescript": "^5.6.3",
+        "@nx/react": "^22.0.0",
+        "@nx/vite": "^22.0.0",
         "@types/react": "^18.3.12",
         "@types/react-dom": "^18.3.1",
-        "tailwindcss": "^3.4.15",
-        "postcss": "^8.4.49",
+        "@vitejs/plugin-react": "^4.3.1",
         "autoprefixer": "^10.4.20",
-        "nx": "^22.0.0"
+        "nx": "^22.0.0",
+        "postcss": "^8.4.49",
+        "tailwindcss": "^3.4.15",
+        "typescript": "^5.6.3",
+        "vite": "^5.4.8"
     }
 }

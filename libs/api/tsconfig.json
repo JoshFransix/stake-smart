@@ -1,0 +1,15 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "module": "esnext",
+        "lib": [
+            "es2020",
+            "dom"
+        ],
+        "declaration": true,
+        "declarationMap": true
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
+}

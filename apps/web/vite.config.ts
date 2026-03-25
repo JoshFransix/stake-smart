@@ -18,6 +18,7 @@ export default defineConfig({
       '@stake-smart/betting': resolve(__dirname, '../../libs/betting/src'),
       '@stake-smart/hooks': resolve(__dirname, '../../libs/hooks/src'),
       '@stake-smart/types': resolve(__dirname, '../../libs/types/src'),
+      '@stake-smart/api': resolve(__dirname, '../../libs/api/src'),
     },
   },
 });
