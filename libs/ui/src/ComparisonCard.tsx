@@ -1,4 +1,5 @@
 import type { BetSlipSummary } from '@stake-smart/types';
+import { formatCurrency, formatOdds } from '@stake-smart/betting';
 import clsx from 'clsx';
 
 interface ComparisonCardProps {
@@ -13,20 +14,21 @@ export function ComparisonCard({ current, alternative, label }: ComparisonCardPr
   const isIncrease = payoutDiff > 0;
 
   return (
-    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 
+                    hover:shadow-md transition-shadow duration-200">
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
           {label}
         </span>
         <span
           className={clsx(
-            'text-xs font-semibold px-2 py-1 rounded',
+            'text-xs font-semibold px-2 py-1 rounded transition-colors duration-200',
             isIncrease
               ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
               : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
           )}
         >
-          {isIncrease ? '+' : ''}{payoutDiff.toFixed(2)}
+          {isIncrease ? '+' : ''}{formatCurrency(payoutDiff).replace('$', '')}
         </span>
       </div>
 
@@ -35,10 +37,10 @@ export function ComparisonCard({ current, alternative, label }: ComparisonCardPr
           <span className="text-blue-700 dark:text-blue-300">Total Odds</span>
           <div className="flex items-center gap-2">
             <span className="text-gray-400 dark:text-gray-600 line-through">
-              {current.totalOdds.toFixed(2)}
+              {formatOdds(current.totalOdds)}
             </span>
             <span className="font-semibold text-blue-900 dark:text-blue-100">
-              {alternative.totalOdds.toFixed(2)}
+              {formatOdds(alternative.totalOdds)}
             </span>
           </div>
         </div>
@@ -47,10 +49,10 @@ export function ComparisonCard({ current, alternative, label }: ComparisonCardPr
           <span className="text-blue-700 dark:text-blue-300">Potential Payout</span>
           <div className="flex items-center gap-2">
             <span className="text-gray-400 dark:text-gray-600 line-through">
-              ${current.potentialPayout.toFixed(2)}
+              {formatCurrency(current.potentialPayout)}
             </span>
             <span className="font-semibold text-blue-900 dark:text-blue-100">
-              ${alternative.potentialPayout.toFixed(2)}
+              {formatCurrency(alternative.potentialPayout)}
             </span>
           </div>
         </div>

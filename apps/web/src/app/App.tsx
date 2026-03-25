@@ -29,7 +29,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <header className="mb-8 flex items-start justify-between">
           <div>
@@ -53,7 +53,8 @@ export default function App() {
                 {bets.length > 0 && (
                   <button
                     onClick={clearBets}
-                    className="text-sm text-red-600 hover:text-red-700 dark:text-red-400"
+                    className="text-sm text-red-600 hover:text-red-700 dark:text-red-400 
+                             transition-colors duration-150 hover:underline"
                   >
                     Clear All
                   </button>
@@ -71,7 +72,10 @@ export default function App() {
                   <button
                     key={i}
                     onClick={() => addBet(bet.match, bet.odds)}
-                    className="px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+                    className="px-3 py-2 text-sm bg-blue-600 text-white rounded 
+                             hover:bg-blue-700 active:bg-blue-800 
+                             transition-colors duration-150 
+                             hover:shadow-md active:scale-95 transform"
                   >
                     {bet.match} ({bet.odds})
                   </button>

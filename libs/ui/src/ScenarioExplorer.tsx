@@ -13,7 +13,7 @@ export function ScenarioExplorer({ currentSummary, scenarios }: ScenarioExplorer
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       <div className="flex items-center gap-2">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           Scenario Explorer
@@ -24,13 +24,18 @@ export function ScenarioExplorer({ currentSummary, scenarios }: ScenarioExplorer
       </div>
 
       <div className="space-y-3">
-        {scenarios.map((scenario) => (
-          <ComparisonCard
+        {scenarios.map((scenario, index) => (
+          <div 
             key={scenario.id}
-            current={currentSummary}
-            alternative={scenario.summary}
-            label={scenario.label}
-          />
+            style={{ animationDelay: `${index * 50}ms` }}
+            className="animate-slide-up"
+          >
+            <ComparisonCard
+              current={currentSummary}
+              alternative={scenario.summary}
+              label={scenario.label}
+            />
+          </div>
         ))}
       </div>
     </div>
