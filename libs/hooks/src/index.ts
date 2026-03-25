@@ -21,6 +21,11 @@ export function useBetSlip() {
   );
 
   const addBet = (match: string, odds: number) => {
+    const matchExists = bets.some(bet => bet.match.toLowerCase() === match.toLowerCase());
+    if (matchExists) {
+      return false;
+    }
+    
     const newBet: Bet = {
       id: crypto.randomUUID(),
       match,
@@ -28,6 +33,7 @@ export function useBetSlip() {
       selected: true,
     };
     setBets((prev) => [...prev, newBet]);
+    return true;
   };
 
   const removeBet = (id: string) => {

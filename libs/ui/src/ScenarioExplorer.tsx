@@ -1,5 +1,6 @@
 import type { BetSlipSummary } from '@stake-smart/types';
 import type { Scenario } from '@stake-smart/hooks';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ComparisonCard } from './ComparisonCard';
 
 interface ScenarioExplorerProps {
@@ -13,7 +14,13 @@ export function ScenarioExplorer({ currentSummary, scenarios }: ScenarioExplorer
   }
 
   return (
-    <div className="space-y-4 animate-fade-in">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4 }}
+      className="space-y-4"
+    >
       <div className="flex items-center gap-2">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           Scenario Explorer
@@ -23,21 +30,35 @@ export function ScenarioExplorer({ currentSummary, scenarios }: ScenarioExplorer
         </span>
       </div>
 
-      <div className="space-y-3">
-        {scenarios.map((scenario, index) => (
-          <div 
-            key={scenario.id}
-            style={{ animationDelay: `${index * 50}ms` }}
-            className="animate-slide-up"
-          >
-            <ComparisonCard
-              current={currentSummary}
-              alternative={scenario.summary}
-              label={scenario.label}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
+      <AnimatePresence mode="popLayout">
+        <div className="space-y-3">
+          {scenarios.map((scenario, index) => (
+            <motion.div
+              key={scenario.id}
+              layout
+              initial={{ opacity: 0, x: -50, scale: 0.9 }}
+              animate={{ 
+                opacity: 1, 
+                x: 0, 
+                scale: 1,
+                transition: { 
+                  delay: index * 0.08,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20
+                }
+              }}
+              exit={{ opacity: 0, x: 50, scale: 0.9 }}
+            >
+              <ComparisonCard
+                current={currentSummary}
+                alternative={scenario.summary}
+                label={scenario.label}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </AnimatePresence>
+    </motion.div>
   );
 }

@@ -25,3 +25,9 @@ export function calculateRiskLevel(bets: Bet[]): RiskLevel {
 }
 
 export { formatCurrency, formatOdds } from './formatters';
+export { 
+  calculateImpliedProbability, 
+  calculateCombinedProbability, 
+  analyzeBets 
+} from './probability';
+export type { BetProbability } from './probability';

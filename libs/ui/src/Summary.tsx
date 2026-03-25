@@ -1,10 +1,25 @@
 import type { BetSlipSummary, RiskLevel } from "@stake-smart/types";
 import { formatCurrency, formatOdds } from "@stake-smart/betting";
+import { motion, useSpring, useTransform } from "framer-motion";
+import { useEffect } from "react";
 import clsx from "clsx";
 
 interface SummaryProps {
   summary: BetSlipSummary;
   riskLevel: RiskLevel;
+}
+
+function AnimatedNumber({ value, format }: { value: number; format?: (n: number) => string }) {
+  const spring = useSpring(0, { stiffness: 100, damping: 30 });
+  const display = useTransform(spring, (current) => 
+    format ? format(current) : current.toFixed(0)
+  );
+
+  useEffect(() => {
+    spring.set(value);
+  }, [spring, value]);
+
+  return <motion.span>{display}</motion.span>;
 }
 
 export function Summary({ summary, riskLevel }: SummaryProps) {
@@ -20,21 +35,24 @@ export function Summary({ summary, riskLevel }: SummaryProps) {
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+    <motion.div
+      layout
+      className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6"
+    >
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <span className="text-gray-600 dark:text-gray-400">
             Selected Bets
           </span>
-          <span className="font-semibold text-gray-900 dark:text-white transition-all duration-300">
-            {summary.selectedCount}
+          <span className="font-semibold text-gray-900 dark:text-white">
+            <AnimatedNumber value={summary.selectedCount} />
           </span>
         </div>
 
         <div className="flex justify-between items-center">
           <span className="text-gray-600 dark:text-gray-400">Total Odds</span>
-          <span className="font-semibold text-gray-900 dark:text-white transition-all duration-300">
-            {formatOdds(summary.totalOdds)}
+          <span className="font-semibold text-gray-900 dark:text-white">
+            <AnimatedNumber value={summary.totalOdds} format={(n) => n.toFixed(2)} />
           </span>
         </div>
 
@@ -43,19 +61,29 @@ export function Summary({ summary, riskLevel }: SummaryProps) {
             <span className="text-gray-600 dark:text-gray-400">
               Potential Payout
             </span>
-            <span className="text-2xl font-bold text-gray-900 dark:text-white transition-all duration-300">
-              {formatCurrency(summary.potentialPayout)}
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">
+              <AnimatedNumber 
+                value={summary.potentialPayout} 
+                format={(n) => formatCurrency(n)} 
+              />
             </span>
           </div>
         </div>
 
-        <div className="flex justify-between items-center">
+        <motion.div 
+          className="flex justify-between items-center"
+          animate={{ 
+            scale: [1, 1.05, 1],
+            transition: { duration: 0.3 }
+          }}
+          key={riskLevel}
+        >
           <span className="text-gray-600 dark:text-gray-400">Risk Level</span>
-          <span className={clsx("font-semibold transition-colors duration-300", getRiskColor(riskLevel))}>
+          <span className={clsx("font-semibold", getRiskColor(riskLevel))}>
             {riskLevel}
           </span>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
