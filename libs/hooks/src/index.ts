@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react';
 import type { Bet, BetSlipSummary, RiskLevel } from '@stake-smart/types';
 import { calculateSummary, calculateRiskLevel } from '@stake-smart/betting';
 
+export { useDarkMode } from './useDarkMode';
+
 export function useBetSlip() {
   const [bets, setBets] = useState<Bet[]>([]);
   const [stake, setStake] = useState(10);
