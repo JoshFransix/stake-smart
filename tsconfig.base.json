@@ -29,6 +29,9 @@
             ],
             "@stake-smart/types": [
                 "libs/types/src/index.ts"
+            ],
+            "@stake-smart/api": [
+                "libs/api/src/index.ts"
             ]
         },
         "jsx": "react-jsx",

@@ -7,6 +7,7 @@ import clsx from "clsx";
 interface SummaryProps {
   summary: BetSlipSummary;
   riskLevel: RiskLevel;
+  compact?: boolean;
 }
 
 function AnimatedNumber({ value, format }: { value: number; format?: (n: number) => string }) {
@@ -22,7 +23,7 @@ function AnimatedNumber({ value, format }: { value: number; format?: (n: number)
   return <motion.span>{display}</motion.span>;
 }
 
-export function Summary({ summary, riskLevel }: SummaryProps) {
+export function Summary({ summary, riskLevel, compact = false }: SummaryProps) {
   const getRiskColor = (level: RiskLevel) => {
     switch (level) {
       case "Low":
@@ -37,31 +38,57 @@ export function Summary({ summary, riskLevel }: SummaryProps) {
   return (
     <motion.div
       layout
-      className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6"
+      className={clsx(
+        "bg-gray-50 dark:bg-gray-800 rounded-lg",
+        compact ? "p-3" : "p-6"
+      )}
     >
-      <div className="space-y-4">
+      <div className={clsx(compact ? "space-y-2" : "space-y-4")}>
         <div className="flex justify-between items-center">
-          <span className="text-gray-600 dark:text-gray-400">
+          <span className={clsx(
+            "text-gray-600 dark:text-gray-400",
+            compact && "text-sm"
+          )}>
             Selected Bets
           </span>
-          <span className="font-semibold text-gray-900 dark:text-white">
+          <span className={clsx(
+            "font-semibold text-gray-900 dark:text-white",
+            compact && "text-sm"
+          )}>
             <AnimatedNumber value={summary.selectedCount} />
           </span>
         </div>
 
         <div className="flex justify-between items-center">
-          <span className="text-gray-600 dark:text-gray-400">Total Odds</span>
-          <span className="font-semibold text-gray-900 dark:text-white">
+          <span className={clsx(
+            "text-gray-600 dark:text-gray-400",
+            compact && "text-sm"
+          )}>
+            Total Odds
+          </span>
+          <span className={clsx(
+            "font-semibold text-gray-900 dark:text-white",
+            compact && "text-sm"
+          )}>
             <AnimatedNumber value={summary.totalOdds} format={(n) => n.toFixed(2)} />
           </span>
         </div>
 
-        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className={clsx(
+          "border-t border-gray-200 dark:border-gray-700",
+          compact ? "pt-2" : "pt-4"
+        )}>
           <div className="flex justify-between items-center">
-            <span className="text-gray-600 dark:text-gray-400">
+            <span className={clsx(
+              "text-gray-600 dark:text-gray-400",
+              compact && "text-sm"
+            )}>
               Potential Payout
             </span>
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">
+            <span className={clsx(
+              "font-bold text-gray-900 dark:text-white",
+              compact ? "text-lg" : "text-2xl"
+            )}>
               <AnimatedNumber 
                 value={summary.potentialPayout} 
                 format={(n) => formatCurrency(n)} 
@@ -78,8 +105,17 @@ export function Summary({ summary, riskLevel }: SummaryProps) {
           }}
           key={riskLevel}
         >
-          <span className="text-gray-600 dark:text-gray-400">Risk Level</span>
-          <span className={clsx("font-semibold", getRiskColor(riskLevel))}>
+          <span className={clsx(
+            "text-gray-600 dark:text-gray-400",
+            compact && "text-sm"
+          )}>
+            Risk Level
+          </span>
+          <span className={clsx(
+            "font-semibold",
+            getRiskColor(riskLevel),
+            compact && "text-sm"
+          )}>
             {riskLevel}
           </span>
         </motion.div>
