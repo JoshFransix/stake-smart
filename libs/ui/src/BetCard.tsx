@@ -1,5 +1,5 @@
-import type { Bet } from '@stake-smart/types';
-import clsx from 'clsx';
+import type { Bet } from "@stake-smart/types";
+import clsx from "clsx";
 
 interface BetCardProps {
   bet: Bet;
@@ -11,10 +11,10 @@ export function BetCard({ bet, onToggle, onRemove }: BetCardProps) {
   return (
     <div
       className={clsx(
-        'p-4 rounded-lg border transition-all',
+        "p-4 rounded-lg border transition-all",
         bet.selected
-          ? 'bg-white dark:bg-gray-800 border-blue-500'
-          : 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 opacity-60'
+          ? "bg-white dark:bg-gray-800 border-blue-500"
+          : "bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 opacity-60",
       )}
     >
       <div className="flex items-start justify-between gap-4">

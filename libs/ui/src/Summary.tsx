@@ -1,5 +1,5 @@
-import type { BetSlipSummary, RiskLevel } from '@stake-smart/types';
-import clsx from 'clsx';
+import type { BetSlipSummary, RiskLevel } from "@stake-smart/types";
+import clsx from "clsx";
 
 interface SummaryProps {
   summary: BetSlipSummary;
@@ -9,12 +9,12 @@ interface SummaryProps {
 export function Summary({ summary, riskLevel }: SummaryProps) {
   const getRiskColor = (level: RiskLevel) => {
     switch (level) {
-      case 'Low':
-        return 'text-green-600 dark:text-green-400';
-      case 'Medium':
-        return 'text-yellow-600 dark:text-yellow-400';
-      case 'High':
-        return 'text-red-600 dark:text-red-400';
+      case "Low":
+        return "text-green-600 dark:text-green-400";
+      case "Medium":
+        return "text-yellow-600 dark:text-yellow-400";
+      case "High":
+        return "text-red-600 dark:text-red-400";
     }
   };
 
@@ -22,12 +22,14 @@ export function Summary({ summary, riskLevel }: SummaryProps) {
     <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-gray-600 dark:text-gray-400">Selected Bets</span>
+          <span className="text-gray-600 dark:text-gray-400">
+            Selected Bets
+          </span>
           <span className="font-semibold text-gray-900 dark:text-white">
             {summary.selectedCount}
           </span>
         </div>
-        
+
         <div className="flex justify-between items-center">
           <span className="text-gray-600 dark:text-gray-400">Total Odds</span>
           <span className="font-semibold text-gray-900 dark:text-white">
@@ -37,7 +39,9 @@ export function Summary({ summary, riskLevel }: SummaryProps) {
 
         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center">
-            <span className="text-gray-600 dark:text-gray-400">Potential Payout</span>
+            <span className="text-gray-600 dark:text-gray-400">
+              Potential Payout
+            </span>
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
               ${summary.potentialPayout.toFixed(2)}
             </span>
@@ -46,7 +50,7 @@ export function Summary({ summary, riskLevel }: SummaryProps) {
 
         <div className="flex justify-between items-center">
           <span className="text-gray-600 dark:text-gray-400">Risk Level</span>
-          <span className={clsx('font-semibold', getRiskColor(riskLevel))}>
+          <span className={clsx("font-semibold", getRiskColor(riskLevel))}>
             {riskLevel}
           </span>
         </div>

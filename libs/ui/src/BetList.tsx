@@ -1,5 +1,5 @@
-import type { Bet } from '@stake-smart/types';
-import { BetCard } from './BetCard';
+import type { Bet } from "@stake-smart/types";
+import { BetCard } from "./BetCard";
 
 interface BetListProps {
   bets: Bet[];

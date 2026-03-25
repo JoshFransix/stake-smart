@@ -1,14 +1,31 @@
-import { useBetSlip, useDarkMode } from '@stake-smart/hooks';
-import { BetList, Summary, StakeInput, DarkModeToggle } from '@stake-smart/ui';
+import { useBetSlip, useDarkMode, useScenarios } from "@stake-smart/hooks";
+import {
+  BetList,
+  Summary,
+  StakeInput,
+  DarkModeToggle,
+  ScenarioExplorer,
+} from "@stake-smart/ui";
 
 export default function App() {
-  const { bets, stake, setStake, summary, riskLevel, addBet, toggleBet, removeBet, clearBets } = useBetSlip();
+  const {
+    bets,
+    stake,
+    setStake,
+    summary,
+    riskLevel,
+    addBet,
+    toggleBet,
+    removeBet,
+    clearBets,
+  } = useBetSlip();
   const { isDark, toggle } = useDarkMode();
+  const scenarios = useScenarios(bets, stake);
 
   const sampleBets = [
-    { match: 'Arsenal vs Chelsea', odds: 2.5 },
-    { match: 'Man City vs Liverpool', odds: 3.2 },
-    { match: 'Barcelona vs Real Madrid', odds: 1.8 },
+    { match: "Arsenal vs Chelsea", odds: 2.5 },
+    { match: "Man City vs Liverpool", odds: 3.2 },
+    { match: "Barcelona vs Real Madrid", odds: 1.8 },
   ];
 
   return (
@@ -61,6 +78,11 @@ export default function App() {
                 ))}
               </div>
             </div>
+
+            <ScenarioExplorer
+              currentSummary={summary}
+              scenarios={scenarios}
+            />
           </div>
 
           <div className="space-y-6">

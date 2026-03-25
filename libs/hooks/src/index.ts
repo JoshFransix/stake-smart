@@ -3,6 +3,8 @@ import type { Bet, BetSlipSummary, RiskLevel } from '@stake-smart/types';
 import { calculateSummary, calculateRiskLevel } from '@stake-smart/betting';
 
 export { useDarkMode } from './useDarkMode';
+export { useScenarios } from './useScenarios';
+export type { Scenario } from './useScenarios';
 
 export function useBetSlip() {
   const [bets, setBets] = useState<Bet[]>([]);
