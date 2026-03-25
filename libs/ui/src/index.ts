@@ -6,3 +6,4 @@ export { DarkModeToggle } from './DarkModeToggle';
 export { ComparisonCard } from './ComparisonCard';
 export { ScenarioExplorer } from './ScenarioExplorer';
 export { ProbabilityAnalyzer } from './ProbabilityAnalyzer';
+export { ScrollToTop } from './ScrollToTop';
