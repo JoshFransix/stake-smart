@@ -52,10 +52,10 @@ Comprehensive analytics dashboard with Chart.js integration:
 - **Risk vs reward scatter plot** showing relationship between odds and returns
 - **Summary statistics**: Win rate percentage, total staked, total returns, net profit
 - **Recent bets list** with detailed breakdown
-- **LocalStorage persistence** for data retention across sessions
+- **Zustand state management** with automatic persistence
 
 **Technical Implementation:**
-- Custom `useBetHistory` hook with localStorage integration
+- Zustand stores with persist middleware for localStorage integration
 - Chart.js with React wrappers (react-chartjs-2)
 - Real-time chart updates on bet completion
 - Color-coded visualizations (green = won, red = lost)
@@ -105,8 +105,10 @@ stake-smart/
     │   ├── useBetSlip.ts    # Core bet management logic
     │   ├── useDarkMode.ts   # Theme persistence
     │   ├── useScenarios.ts  # Scenario generation engine
-    │   ├── useBetHistory.ts # Bet history tracking with localStorage
-    │   └── useLiveMatches.ts # Live odds fetching
+    │   ├── useLiveMatches.ts # Live odds fetching
+    │   └── stores/          # Zustand state stores
+    │       ├── betHistoryStore.ts  # Bet history with persistence
+    │       └── themeStore.ts       # Theme management
     ├── ui/                  # Reusable components (13 components)
     │   ├── BetCard.tsx      # Animated bet selection card
     │   ├── BetHistory.tsx   # Analytics dashboard with Chart.js
@@ -134,6 +136,7 @@ stake-smart/
 | Language | TypeScript 5.6 | Type safety, strict mode enabled |
 | Build Tool | Vite 5.4 | Fast HMR, optimized production builds |
 | Monorepo | NX 22.0 | Workspace management, path aliases |
+| State Management | Zustand 4.x | Simple state management with persistence |
 | Styling | Tailwind CSS 3.4 | Utility-first CSS, dark mode support |
 | Animation | Framer Motion 11.0 | Spring physics, layout animations |
 | Data Visualization | Chart.js 4.x | Interactive charts and analytics |

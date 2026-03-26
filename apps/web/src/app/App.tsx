@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useBetSlip, useDarkMode, useScenarios, useBetHistory } from "@stake-smart/hooks";
+import { useBetSlip, useDarkMode, useScenarios, useBetHistoryStore } from "@stake-smart/hooks";
 import {
   BetList,
   Summary,
@@ -29,7 +29,7 @@ export default function App() {
   } = useBetSlip();
   const { isDark, toggle } = useDarkMode();
   const scenarios = useScenarios(bets, stake);
-  const { history, addEntry, clearHistory } = useBetHistory();
+  const { history, addEntry, clearHistory } = useBetHistoryStore();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('info');
   const [isExpanded, setIsExpanded] = useState(false);

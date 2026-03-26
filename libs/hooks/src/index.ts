@@ -5,8 +5,11 @@ import { calculateSummary, calculateRiskLevel } from '@stake-smart/betting';
 export { useDarkMode } from './useDarkMode';
 export { useScenarios } from './useScenarios';
 export { useLiveMatches } from './useLiveMatches';
-export { useBetHistory } from './useBetHistory';
 export type { Scenario } from './useScenarios';
+
+// Export stores
+export { useBetHistoryStore } from './stores/betHistoryStore';
+export { useThemeStore, useThemeSync } from './stores/themeStore';
 
 export function useBetSlip() {
   const [bets, setBets] = useState<Bet[]>([]);
