@@ -8,3 +8,4 @@ export { ScenarioExplorer } from './ScenarioExplorer';
 export { ProbabilityAnalyzer } from './ProbabilityAnalyzer';
 export { ScrollToTop } from './ScrollToTop';
 export { LiveMatches } from './LiveMatches';
+export { Toast } from './Toast';

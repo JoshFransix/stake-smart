@@ -9,6 +9,7 @@ import {
   ProbabilityAnalyzer,
   ScrollToTop,
   LiveMatches,
+  Toast,
 } from "@stake-smart/ui";
 import { analyzeBets, calculateCombinedProbability, formatCurrency } from "@stake-smart/betting";
 import { AnimatePresence, motion } from "framer-motion";
@@ -28,22 +29,32 @@ export default function App() {
   const { isDark, toggle } = useDarkMode();
   const scenarios = useScenarios(bets, stake);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('info');
   const [isExpanded, setIsExpanded] = useState(false);
 
   const probabilities = analyzeBets(bets);
   const combinedProbability = calculateCombinedProbability(bets);
 
+  const showToast = (message: string, type: 'success' | 'error' | 'info') => {
+    setToastMessage(message);
+    setToastType(type);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
   const handleAddBet = (match: string, odds: number) => {
     const success = addBet(match, odds);
     if (!success) {
-      setToastMessage(`"${match}" is already in your bet slip!`);
-      setTimeout(() => setToastMessage(null), 3000);
+      showToast(`"${match}" is already in your bet slip!`, 'error');
+    } else {
+      showToast(`Added "${match}" to your bet slip`, 'success');
     }
   };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       <ScrollToTop />
+      <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage(null)} />
+      
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="mb-8 flex items-start justify-between">
           <div>
@@ -56,19 +67,6 @@ export default function App() {
           </div>
           <DarkModeToggle isDark={isDark} onToggle={toggle} />
         </header>
-
-        <AnimatePresence>
-          {toastMessage && (
-            <motion.div
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -50 }}
-              className="fixed top-4 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50"
-            >
-              {toastMessage}
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         <div className="grid lg:grid-cols-3 gap-6 pb-24 lg:pb-8">
           <div className="lg:col-span-2 space-y-6">
