@@ -5,6 +5,7 @@ import { calculateSummary, calculateRiskLevel } from '@stake-smart/betting';
 export { useDarkMode } from './useDarkMode';
 export { useScenarios } from './useScenarios';
 export { useLiveMatches } from './useLiveMatches';
+export { useBetHistory } from './useBetHistory';
 export type { Scenario } from './useScenarios';
 
 export function useBetSlip() {

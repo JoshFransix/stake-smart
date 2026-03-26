@@ -9,3 +9,4 @@ export { ProbabilityAnalyzer } from './ProbabilityAnalyzer';
 export { ScrollToTop } from './ScrollToTop';
 export { LiveMatches } from './LiveMatches';
 export { Toast } from './Toast';
+export { BetHistory } from './BetHistory';

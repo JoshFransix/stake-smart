@@ -12,3 +12,14 @@ export interface BetSlipSummary {
 }
 
 export type RiskLevel = 'Low' | 'Medium' | 'High';
+
+export interface BetHistoryEntry {
+  id: string;
+  timestamp: number;
+  bets: Bet[];
+  stake: number;
+  totalOdds: number;
+  potentialPayout: number;
+  won: boolean;
+  actualReturn: number;
+}
