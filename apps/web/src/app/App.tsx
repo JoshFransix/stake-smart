@@ -62,7 +62,7 @@ export default function App() {
               Stake Smart
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              AI-powered bet analysis with real-time scenario simulation
+              Advanced bet analysis with real-time odds and scenario simulation
             </p>
           </div>
           <DarkModeToggle isDark={isDark} onToggle={toggle} />
