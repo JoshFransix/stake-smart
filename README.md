@@ -15,6 +15,17 @@ When you combine multiple bets, your win probability drops exponentially. This a
 - Probability calculations with risk indicators
 - Dark mode and mobile responsive
 
+## Screenshots
+
+![Main Interface](screenshots/stake-smart-img-3.png)
+*Main betting interface with live odds and probability analysis*
+
+![Analytics Dashboard](screenshots/stake-smart-img-4.png)
+*Bet history analytics with Chart.js visualizations*
+
+![Dark Mode](screenshots/stake-smart-img-1.png)
+*Dark mode with enhanced contrast and accessibility*
+
 ## Tech Stack
 
 Built with NX monorepo structure:
