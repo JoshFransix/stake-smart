@@ -24,6 +24,7 @@ Built with NX monorepo structure:
 - **Zustand** - State management with persistence
 - **Tailwind CSS** - Styling and dark mode
 - **Framer Motion** - Animations
+- **Lucide React** - Icon library
 - **Chart.js** - History analytics
 - **Axios** - API calls
 - **The Odds API** - Live sports data

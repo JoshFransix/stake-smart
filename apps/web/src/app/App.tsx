@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useBetSlip, useDarkMode, useScenarios, useBetHistoryStore } from "@stake-smart/hooks";
+import { ChevronDown, TrendingUp, TrendingDown } from "lucide-react";
 import {
   BetList,
   Summary,
@@ -63,7 +64,7 @@ export default function App() {
     addEntry(bets, stake, summary.totalOdds, summary.potentialPayout, won, actualReturn);
     clearBets();
     showToast(
-      won ? '🎉 Winning bet recorded!' : 'Bet recorded',
+      won ? 'Winning bet recorded!' : 'Bet recorded',
       won ? 'success' : 'info'
     );
     setActiveTab('history');
@@ -152,16 +153,18 @@ export default function App() {
                     <button
                       onClick={() => handleCompleteBet(true)}
                       className="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 text-white 
-                               rounded-lg font-medium transition-colors"
+                               rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                     >
-                      ✅ Won
+                      <TrendingUp className="w-4 h-4" />
+                      Won
                     </button>
                     <button
                       onClick={() => handleCompleteBet(false)}
                       className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white 
-                               rounded-lg font-medium transition-colors"
+                               rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                     >
-                      ❌ Lost
+                      <TrendingDown className="w-4 h-4" />
+                      Lost
                     </button>
                   </div>
                 )}
@@ -210,21 +213,12 @@ export default function App() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <motion.svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                  <motion.div
                     animate={{ rotate: isExpanded ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </motion.svg>
+                    <ChevronDown className="w-5 h-5" />
+                  </motion.div>
                 </motion.button>
 
                 <AnimatePresence>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronUp } from 'lucide-react';
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -41,19 +42,7 @@ export function ScrollToTop() {
                      z-50 transition-colors duration-200"
           aria-label="Scroll to top"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 10l7-7m0 0l7 7m-7-7v18"
-            />
-          </svg>
+          <ChevronUp className="w-6 h-6" />
         </motion.button>
       )}
     </AnimatePresence>

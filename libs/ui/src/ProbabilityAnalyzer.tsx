@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import type { BetProbability } from '@stake-smart/betting';
 import clsx from 'clsx';
+import { BarChart3 } from 'lucide-react';
 
 interface ProbabilityAnalyzerProps {
   probabilities: BetProbability[];
@@ -32,9 +33,7 @@ export function ProbabilityAnalyzer({
                  border border-purple-200 dark:border-purple-800 rounded-lg p-6"
     >
       <div className="flex items-center gap-2 mb-4">
-        <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-        </svg>
+        <BarChart3 className="w-5 h-5 text-purple-600 dark:text-purple-400" />
         <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-100">
           Probability Analysis
         </h3>

@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import type { BetHistoryEntry } from '@stake-smart/types';
 import { formatCurrency } from '@stake-smart/betting';
+import { BarChart3 } from 'lucide-react';
 
 ChartJS.register(
   CategoryScale,
@@ -34,7 +35,7 @@ export function BetHistory({ history, onClearHistory }: BetHistoryProps) {
   if (history.length === 0) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">
-        <div className="text-6xl mb-4">📊</div>
+        <BarChart3 className="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-gray-600" />
         <h3 className="text-xl font-bold mb-2 dark:text-white">No Bet History Yet</h3>
         <p className="text-gray-600 dark:text-gray-400">
           Complete bets to see analytics and insights
