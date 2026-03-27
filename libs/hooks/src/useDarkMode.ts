@@ -1,17 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useThemeStore, useThemeSync } from './stores/themeStore';
 
 export function useDarkMode() {
-  const [isDark, setIsDark] = useState(false);
+  const { setTheme, toggle } = useThemeStore();
+  const { theme, isDark } = useThemeSync();
 
-  useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
-  }, []);
-
-  const toggle = () => {
-    document.documentElement.classList.toggle('dark');
-    setIsDark(!isDark);
+  return {
+    theme,
+    isDark,
+    setTheme,
+    toggle,
   };
-
-  return { isDark, toggle };
 }

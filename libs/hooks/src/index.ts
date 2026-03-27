@@ -7,6 +7,10 @@ export { useScenarios } from './useScenarios';
 export { useLiveMatches } from './useLiveMatches';
 export type { Scenario } from './useScenarios';
 
+// Export stores
+export { useBetHistoryStore } from './stores/betHistoryStore';
+export { useThemeStore, useThemeSync } from './stores/themeStore';
+
 export function useBetSlip() {
   const [bets, setBets] = useState<Bet[]>([]);
   const [stake, setStake] = useState(10);
