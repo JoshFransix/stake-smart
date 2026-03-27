@@ -39,7 +39,7 @@ export function ProbabilityAnalyzer({
         </h3>
       </div>
 
-      <div className="space-y-3 mb-4">
+      <div className="space-y-3 mb-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin">
         {probabilities.map((prob, index) => (
           <motion.div
             key={prob.match}

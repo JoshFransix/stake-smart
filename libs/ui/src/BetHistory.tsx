@@ -14,6 +14,9 @@ import {
 import type { BetHistoryEntry } from '@stake-smart/types';
 import { formatCurrency } from '@stake-smart/betting';
 import { BarChart3 } from 'lucide-react';
+import { Button } from './Button';
+import { ConfirmDialog } from './ConfirmDialog';
+import { useState } from 'react';
 
 ChartJS.register(
   CategoryScale,
@@ -32,6 +35,8 @@ interface BetHistoryProps {
 }
 
 export function BetHistory({ history, onClearHistory }: BetHistoryProps) {
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
   if (history.length === 0) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">
@@ -151,13 +156,24 @@ export function BetHistory({ history, onClearHistory }: BetHistoryProps) {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold dark:text-white">Bet History Analytics</h2>
-        <button
-          onClick={onClearHistory}
-          className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+        <Button
+          onClick={() => setShowConfirmDialog(true)}
+          variant="destructive"
+          size="sm"
         >
           Clear History
-        </button>
+        </Button>
       </div>
+
+      <ConfirmDialog
+        open={showConfirmDialog}
+        onClose={() => setShowConfirmDialog(false)}
+        onConfirm={onClearHistory}
+        title="Clear Bet History?"
+        description="This action cannot be undone. All your bet history and analytics will be permanently deleted."
+        confirmText="Clear History"
+        cancelText="Cancel"
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white dark:bg-gray-800 rounded-xl p-4">
