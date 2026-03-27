@@ -3,7 +3,6 @@ import type { OddsApiMatch, Match } from './types';
 
 const API_KEY = import.meta.env.VITE_ODDS_API_KEY;
 const BASE_URL = import.meta.env.VITE_ODDS_API_BASE_URL || 'https://api.the-odds-api.com/v4';
-const CACHE_DURATION = 10 * 60 * 1000;
 
 if (!API_KEY) {
   throw new Error('API Key is not defined in environment variables');
@@ -16,62 +15,20 @@ const apiClient = axios.create({
   },
 });
 
-interface CacheEntry {
-  data: Match[];
-  timestamp: number;
-}
+let getCacheFunction: ((sport: string) => Match[] | null) | null = null;
+let setCacheFunction: ((sport: string, data: Match[]) => void) | null = null;
 
-const memoryCache = new Map<string, CacheEntry>();
-
-function getCacheKey(sport: string): string {
-  return `odds_${sport}`;
-}
-
-function getFromCache(sport: string): Match[] | null {
-  const cacheKey = getCacheKey(sport);
-  
-  const memoryEntry = memoryCache.get(cacheKey);
-  if (memoryEntry && Date.now() - memoryEntry.timestamp < CACHE_DURATION) {
-    console.log(`[Cache] Memory hit for ${sport}`);
-    return memoryEntry.data;
-  }
-  
-  try {
-    const stored = localStorage.getItem(cacheKey);
-    if (stored) {
-      const entry: CacheEntry = JSON.parse(stored);
-      if (Date.now() - entry.timestamp < CACHE_DURATION) {
-        console.log(`[Cache] LocalStorage hit for ${sport}`);
-        memoryCache.set(cacheKey, entry);
-        return entry.data;
-      }
-    }
-  } catch (error) {
-    console.warn('[Cache] Failed to read from localStorage:', error);
-  }
-  
-  return null;
-}
-
-function saveToCache(sport: string, data: Match[]): void {
-  const cacheKey = getCacheKey(sport);
-  const entry: CacheEntry = {
-    data,
-    timestamp: Date.now(),
-  };
-  
-  memoryCache.set(cacheKey, entry);
-  
-  try {
-    localStorage.setItem(cacheKey, JSON.stringify(entry));
-  } catch (error) {
-    console.warn('[Cache] Failed to write to localStorage:', error);
-  }
+export function initializeOddsCache(
+  getCache: (sport: string) => Match[] | null,
+  setCache: (sport: string, data: Match[]) => void
+) {
+  getCacheFunction = getCache;
+  setCacheFunction = setCache;
 }
 
 export async function fetchLiveOdds(sport: string = 'soccer_epl', forceRefresh: boolean = false): Promise<Match[]> {
-  if (!forceRefresh) {
-    const cached = getFromCache(sport);
+  if (!forceRefresh && getCacheFunction) {
+    const cached = getCacheFunction(sport);
     if (cached) {
       return cached;
     }
@@ -87,8 +44,14 @@ export async function fetchLiveOdds(sport: string = 'soccer_epl', forceRefresh: 
       },
     });
     
-    const matches = data.map(match => transformMatch(match));
-    saveToCache(sport, matches);
+    const matches = data
+      .map(match => transformMatch(match))
+      .filter((match): match is Match => match !== null);
+    
+    if (setCacheFunction) {
+      setCacheFunction(sport, matches);
+    }
+    
     return matches;
   } catch (error) {
     console.error('Failed to fetch odds:', error);
@@ -106,7 +69,7 @@ export async function fetchAvailableSports() {
   }
 }
 
-function transformMatch(apiMatch: OddsApiMatch): Match {
+function transformMatch(apiMatch: OddsApiMatch): Match | null {
   const bookmaker = apiMatch.bookmakers[0];
   const h2hMarket = bookmaker?.markets?.find(m => m.key === 'h2h');
   
@@ -114,13 +77,18 @@ function transformMatch(apiMatch: OddsApiMatch): Match {
   const awayOutcome = h2hMarket?.outcomes?.find(o => o.name === apiMatch.away_team);
   const drawOutcome = h2hMarket?.outcomes?.find(o => o.name === 'Draw');
 
+  if (!homeOutcome?.price || !awayOutcome?.price) {
+    console.warn(`Skipping match ${apiMatch.home_team} vs ${apiMatch.away_team} - missing odds data`);
+    return null;
+  }
+
   return {
     id: apiMatch.id,
     home: apiMatch.home_team,
     away: apiMatch.away_team,
     odds: {
-      home: homeOutcome?.price || 2.0,
-      away: awayOutcome?.price || 2.0,
+      home: homeOutcome.price,
+      away: awayOutcome.price,
       draw: drawOutcome?.price,
     },
     sport: apiMatch.sport_title,

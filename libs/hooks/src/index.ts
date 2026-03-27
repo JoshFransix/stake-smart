@@ -10,6 +10,7 @@ export type { Scenario } from './useScenarios';
 // Export stores
 export { useBetHistoryStore } from './stores/betHistoryStore';
 export { useThemeStore, useThemeSync } from './stores/themeStore';
+export { useOddsCacheStore } from './stores/oddsCacheStore';
 
 export function useBetSlip() {
   const [bets, setBets] = useState<Bet[]>([]);

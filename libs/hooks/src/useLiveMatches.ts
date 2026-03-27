@@ -1,12 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchLiveOdds } from '@stake-smart/api';
+import { fetchLiveOdds, initializeOddsCache } from '@stake-smart/api';
 import type { Match } from '@stake-smart/api';
+import { useOddsCacheStore } from './stores/oddsCacheStore';
 
 export function useLiveMatches(sport: string = 'soccer_epl') {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const loadingRef = useRef(false);
+  const { getCache, setCache } = useOddsCacheStore();
+
+  useEffect(() => {
+    initializeOddsCache(getCache, setCache);
+  }, [getCache, setCache]);
 
   const loadMatches = async (forceRefresh: boolean = false) => {
     if (loadingRef.current && !forceRefresh) {
