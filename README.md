@@ -102,11 +102,8 @@ Used NX for the monorepo setup - makes it easy to share code between packages wi
 1. **Scenario generation performance** - Fixed with memoization and pure functions
 2. **API rate limits** - Limited to 500 requests/month on free tier, implemented smart caching
 3. **Duplicate API calls** - Fixed by removing useCallback dependency chain and adding loading ref
-4. **Float precision** - JavaScript decimal math is imprecise, used `.toFixed()` for display
-5. **Duplicate bets** - Added validation to check match names before adding
-6. **Chart.js integration** - Used react-chartjs-2 wrapper for declarative API
-7. **Dark mode visibility** - Input text colors needed explicit foreground color for proper contrast
-8. **Modal scroll prevention** - Required both body overflow hidden and scrollbar width compensation
+4. **Duplicate bets** - Added validation to check match names before adding
+5. **Chart.js integration** - Used react-chartjs-2 wrapper for declarative API
 
 ## Deployment
 
