@@ -1,0 +1,25 @@
+<svg width="560" height="140" viewBox="0 0 560 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">Stake Smart Logo Dark</title>
+  <desc id="logoDesc">A shield badge with an upward odds graph and the words Stake Smart in light text for dark backgrounds.</desc>
+  <defs>
+    <linearGradient id="shieldGradient" x1="8" y1="8" x2="84" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="16" y1="66" x2="74" y2="34" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4ADE80"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(12 20)">
+    <path d="M46 0L84 16V50C84 73 69 92 46 100C23 92 8 73 8 50V16L46 0Z" fill="url(#shieldGradient)"/>
+    <path d="M24 64L36 50L47 58L65 36" stroke="url(#accentGradient)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="65" cy="36" r="5" fill="#DCFCE7"/>
+  </g>
+
+  <g fill="#F8FAFC">
+    <text x="126" y="70" font-family="Segoe UI, Inter, sans-serif" font-size="50" font-weight="800" letter-spacing="0.2">Stake Smart</text>
+    <text x="128" y="98" font-family="Segoe UI, Inter, sans-serif" font-size="18" font-weight="600" fill="#CBD5E1" letter-spacing="0.6">BET WITH CLARITY</text>
+  </g>
+</svg>
