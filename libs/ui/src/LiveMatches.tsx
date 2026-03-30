@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLiveMatches } from '@stake-smart/hooks';
 import type { Match } from '@stake-smart/api';
 import clsx from 'clsx';
-
+import { Button } from './Button';
 interface LiveMatchesProps {
   onAddBet: (match: string, odds: number) => void;
 }
@@ -42,14 +42,14 @@ export function LiveMatches({ onAddBet }: LiveMatchesProps) {
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
           Live Matches
         </h2>
-        <button
+        <Button
           onClick={refetch}
           disabled={loading}
-          className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 
-                   disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          variant="ghost"
+          size="sm"
         >
           {loading ? 'Loading...' : 'Refresh'}
-        </button>
+        </Button>
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-2">

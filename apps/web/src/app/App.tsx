@@ -10,9 +10,10 @@ import {
   ProbabilityAnalyzer,
   ScrollToTop,
   LiveMatches,
-  Toast,
   BetHistory,
+  Button,
 } from "@stake-smart/ui";
+import { toast, Toaster } from "sonner";
 import { analyzeBets, calculateCombinedProbability, formatCurrency } from "@stake-smart/betting";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -31,8 +32,6 @@ export default function App() {
   const { isDark, toggle } = useDarkMode();
   const scenarios = useScenarios(bets, stake);
   const { history, addEntry, clearHistory } = useBetHistoryStore();
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('info');
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'betslip' | 'history'>('betslip');
 
@@ -40,9 +39,13 @@ export default function App() {
   const combinedProbability = calculateCombinedProbability(bets);
 
   const showToast = (message: string, type: 'success' | 'error' | 'info') => {
-    setToastMessage(message);
-    setToastType(type);
-    setTimeout(() => setToastMessage(null), 3000);
+    if (type === 'success') {
+      toast.success(message);
+    } else if (type === 'error') {
+      toast.error(message);
+    } else {
+      toast.info(message);
+    }
   };
 
   const handleAddBet = (match: string, odds: number) => {
@@ -73,7 +76,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       <ScrollToTop />
-      <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage(null)} />
+      <Toaster position="top-right" richColors closeButton />
       
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="mb-8 flex items-start justify-between">
@@ -139,35 +142,37 @@ export default function App() {
                     Bet Slip
                   </h2>
                   {bets.length > 0 && (
-                    <button
+                    <Button
                       onClick={clearBets}
-                      className="text-sm text-red-600 hover:text-red-700 dark:text-red-400 
-                               transition-colors duration-150 hover:underline"
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-600 hover:text-red-700 dark:text-red-400"
                     >
                       Clear All
-                    </button>
+                    </Button>
                   )}
                 </div>
                 <BetList bets={bets} onToggle={toggleBet} onRemove={removeBet} />
                 
                 {bets.filter(b => b.selected).length > 0 && (
                   <div className="mt-4 flex gap-3">
-                    <button
+                    <Button
                       onClick={() => handleCompleteBet(true)}
-                      className="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 text-white 
-                               rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                      className="flex-1 bg-green-500 hover:bg-green-600"
+                      size="lg"
                     >
                       <TrendingUp className="w-4 h-4" />
                       Won
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={() => handleCompleteBet(false)}
-                      className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white 
-                               rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                      variant="destructive"
+                      className="flex-1"
+                      size="lg"
                     >
                       <TrendingDown className="w-4 h-4" />
                       Lost
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>

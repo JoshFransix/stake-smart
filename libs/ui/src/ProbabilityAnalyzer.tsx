@@ -25,6 +25,28 @@ export function ProbabilityAnalyzer({
     }
   };
 
+  const getProgressBarColor = (probability: number) => {
+    switch (true) {
+      case probability < 40:
+        return 'bg-red-500';
+      case probability < 60:
+        return 'bg-yellow-500';
+      default:
+        return 'bg-green-500';
+    }
+  };
+
+  const getCombinedProbabilityColor = (probability: number) => {
+    switch (true) {
+      case probability < 10:
+        return 'text-red-600 dark:text-red-400';
+      case probability < 30:
+        return 'text-orange-600 dark:text-orange-400';
+      default:
+        return 'text-green-600 dark:text-green-400';
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -39,7 +61,7 @@ export function ProbabilityAnalyzer({
         </h3>
       </div>
 
-      <div className="space-y-3 mb-4">
+      <div className="space-y-3 mb-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin">
         {probabilities.map((prob, index) => (
           <motion.div
             key={prob.match}
@@ -56,12 +78,7 @@ export function ProbabilityAnalyzer({
                     initial={{ width: 0 }}
                     animate={{ width: `${prob.impliedProbability}%` }}
                     transition={{ duration: 0.8, delay: index * 0.1 + 0.2 }}
-                    className={clsx(
-                      "h-2 rounded-full",
-                      prob.impliedProbability < 40 ? "bg-red-500" :
-                      prob.impliedProbability < 60 ? "bg-yellow-500" :
-                      "bg-green-500"
-                    )}
+                    className={clsx("h-2 rounded-full", getProgressBarColor(prob.impliedProbability))}
                   />
                 </div>
                 <span className="text-xs text-gray-600 dark:text-gray-400 w-12 text-right">
@@ -90,12 +107,7 @@ export function ProbabilityAnalyzer({
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", delay: probabilities.length * 0.1 + 0.5 }}
-            className={clsx(
-              "text-2xl font-bold",
-              combinedProbability < 10 ? "text-red-600 dark:text-red-400" :
-              combinedProbability < 30 ? "text-orange-600 dark:text-orange-400" :
-              "text-green-600 dark:text-green-400"
-            )}
+            className={clsx("text-2xl font-bold", getCombinedProbabilityColor(combinedProbability))}
           >
             {combinedProbability.toFixed(2)}%
           </motion.span>
