@@ -78,9 +78,11 @@ export default function App() {
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="mb-8 flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Stake Smart
-            </h1>
+            <img
+              src={isDark ? "/logo-dark.svg" : "/logo.svg"}
+              alt="Stake Smart"
+              className="h-12 w-auto md:h-14"
+            />
             <p className="mt-2 text-gray-600 dark:text-gray-400">
               Advanced bet analysis with real-time odds and scenario simulation
             </p>
